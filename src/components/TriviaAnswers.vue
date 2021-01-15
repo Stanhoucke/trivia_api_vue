@@ -1,9 +1,10 @@
 <template lang="html">
-  <ol class="answers">
-      <li v-for="answer in answers">
-          {{answer}}
-      </li>
-  </ol>
+        <ol class="answers">
+            <li v-for="(answer) in answers">
+                <label :for="questionNumber" v-html="answer"></label>
+                <input type="radio" :name="questionNumber" :value="answer" v-model="selectedAnswer">
+            </li>
+        </ol>
 </template>
 
 <script>
@@ -11,10 +12,10 @@ export default {
     name: 'trivia-answers',
     data(){
         return{
-
+            selectedAnswer: null
         };
     },
-    props: ['correct', 'incorrect'],
+    props: ['correct', 'incorrect', 'questionNumber'],
     computed: {
         answers: function(){
             let index = Math.floor(Math.random() * 4);
