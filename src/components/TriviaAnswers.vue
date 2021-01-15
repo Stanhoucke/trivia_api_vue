@@ -1,5 +1,12 @@
 <template lang="html">
-  
+  <ol>
+      <li>
+          {{correct}}
+      </li>
+      <li v-for="option in incorrect">
+          {{option}}
+      </li>
+  </ol>
 </template>
 
 <script>
@@ -10,7 +17,7 @@ export default {
 
         };
     },
-    props: ['answers']
+    props: ['correct', 'incorrect']
 }
 </script>
 
