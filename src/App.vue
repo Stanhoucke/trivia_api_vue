@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     fetchTriva: function(newGameInfo){
-      const url = `https://opentdb.com/api.php?amount=${newGameInfo}`
+      const url = `https://opentdb.com/api.php?amount=${newGameInfo.amount}&category=${newGameInfo.category}&difficulty=${newGameInfo.difficulty}&type=${newGameInfo.type}`
       fetch(url)
       .then(res => res.json())
       .then(trivia => this.trivia = trivia.results)
