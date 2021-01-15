@@ -4,6 +4,12 @@
 
 <script>
 export default {
+    name: 'trivia-form',
+    data(){
+        return{
+
+        };
+    }
 
 }
 </script>
