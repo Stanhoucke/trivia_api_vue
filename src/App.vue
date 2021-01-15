@@ -24,14 +24,18 @@ export default {
     'trivia-form': TriviaForm
   },
   mounted(){
-    const url = `https://opentdb.com/api.php?amount=10`
-    fetch(url)
-    .then(res => res.json())
-    .then(trivia => this.trivia = trivia.results)
-
     eventBus.$on('new-game-info', (newGameInfo) => {
       this.newGameInfo = newGameInfo;
-    })
+      this.fetchTriva(newGameInfo);
+    });
+  },
+  methods: {
+    fetchTriva: function(newGameInfo){
+      const url = `https://opentdb.com/api.php?amount=${newGameInfo}`
+      fetch(url)
+      .then(res => res.json())
+      .then(trivia => this.trivia = trivia.results)
+    }
   }
 
 }
