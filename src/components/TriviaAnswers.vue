@@ -1,13 +1,18 @@
 <template lang="html">
         <ol class="answers">
             <li v-for="(answer) in answers">
-                <label :for="questionNumber" v-html="answer"></label>
-                <input type="radio" :name="questionNumber" :value="answer" v-model="selectedAnswer">
+                <form v-on:change.prevent="emitAnswer">
+                    <label :for="questionNumber" v-html="answer"></label>
+                    <input type="radio" :name="questionNumber" :value="[questionNumber, answer]" v-model="selectedAnswer">
+
+                </form>
             </li>
         </ol>
 </template>
 
 <script>
+import { eventBus } from '@/main.js'
+
 export default {
     name: 'trivia-answers',
     data(){
@@ -22,6 +27,11 @@ export default {
             const answers = this.incorrect.map(option => option);
             answers.splice(index, 0, this.correct);
             return answers;
+        }
+    },
+    methods: {
+        emitAnswer: function(){
+            eventBus.$emit('selected-answer', this.selectedAnswer)
         }
     }
 }
