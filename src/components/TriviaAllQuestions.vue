@@ -9,7 +9,7 @@
             </ol>
             <input type="button" value="And your score is..." v-on:click="getAnswers" id="get-answers">
       <div v-if="score.totalQuestions > 0">
-          <h1>You scored {{score.correctAnswers}}/{{score.totalQuestions}}!</h1>
+          <h1 v-if="showScore">You scored {{score.correctAnswers}}/{{score.totalQuestions}}!</h1>
       </div>
   </div>
 </template>
@@ -27,7 +27,8 @@ export default {
             score: {
                 totalQuestions: 0,
                 correctAnswers: 0
-            }
+            },
+            showScore: false
         };
     },
     props: ['questions'],
@@ -38,6 +39,7 @@ export default {
         eventBus.$on('selected-answer', (answer) => {
             this.selectedAnswers.unshift(answer);
         });
+        eventBus.$on('show-answers', show => this.showScore = show)
     },
     methods: {
         getAnswers: function() {
