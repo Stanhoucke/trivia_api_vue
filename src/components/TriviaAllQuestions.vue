@@ -21,7 +21,8 @@ export default {
     name: 'trivia-all-questions',
     data(){
         return{
-            selectedAnswers: []
+            selectedAnswers: [],
+            finalAnswers: null
         };
     },
     props: ['questions'],
@@ -30,13 +31,26 @@ export default {
     },
     mounted(){
         eventBus.$on('selected-answer', (answer) => {
-            this.selectedAnswers.push(answer);
+            this.selectedAnswers.unshift(answer);
             console.log("got answer")
     });
     },
     methods: {
         getAnswers: function() {
-            console.log("hello")
+            const question = this.selectedAnswers.map((number) => number[0]);
+            const finalAnswers = [];
+
+            for (let i = 0; i < question.length; i++) {
+                if (question.indexOf(question[i]) === i ){
+                    finalAnswers.push(this.selectedAnswers[i]);
+                };
+            };
+            finalAnswers.sort();
+            this.finalAnswers = finalAnswers;
+            this.selectedAnswers = [];
+            
+
+            // for let i = 0, i < length, i++ loop?
 
         }
     }
