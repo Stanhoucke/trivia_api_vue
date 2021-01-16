@@ -1,6 +1,5 @@
 <template lang="html">
   <div v-if="questions">
-
             <ol>
                 <li v-for="(question, i) in questions"> 
                     <h3 v-html="question.question"></h3>
@@ -9,7 +8,9 @@
                 </li>
             </ol>
             <input type="button" value="And your score is..." v-on:click="getAnswers" id="get-answers">
-
+      <div v-if="score.totalQuestions > 0">
+          <h3>You scored {{score.correctAnswers}}/{{score.totalQuestions}}!</h3>
+      </div>
   </div>
 </template>
 
@@ -22,7 +23,11 @@ export default {
     data(){
         return{
             selectedAnswers: [],
-            finalAnswers: null
+            finalAnswers: null,
+            score: {
+                totalQuestions: 0,
+                correctAnswers: 0
+            }
         };
     },
     props: ['questions'],
@@ -32,7 +37,6 @@ export default {
     mounted(){
         eventBus.$on('selected-answer', (answer) => {
             this.selectedAnswers.unshift(answer);
-            console.log("got answer")
     });
     },
     methods: {
@@ -48,10 +52,22 @@ export default {
             finalAnswers.sort();
             this.finalAnswers = finalAnswers;
             this.selectedAnswers = [];
-            
-
-            // for let i = 0, i < length, i++ loop?
-
+            this.scoreTrivia();
+        },
+        scoreTrivia: function() {
+            const numberCorrect = this.questions.reduce((totalScore, question, i) => {
+                console.log('Score ', totalScore);
+                console.log('Answer ', question.correct_answer);
+                console.log('My Answer ', this.finalAnswers[i][1]);
+                if ( question.correct_answer === this.finalAnswers[i][1] ){
+                    return totalScore + 1;
+                } else {
+                    return totalScore + 0;
+                };
+            }, 0);
+            console.log(numberCorrect);
+            this.score.correctAnswers += numberCorrect;
+            this.score.totalQuestions += this.finalAnswers.length;
         }
     }
 }
