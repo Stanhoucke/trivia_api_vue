@@ -9,7 +9,7 @@
             </ol>
             <input type="button" value="And your score is..." v-on:click="getAnswers" id="get-answers">
       <div v-if="score.totalQuestions > 0">
-          <h3>You scored {{score.correctAnswers}}/{{score.totalQuestions}}!</h3>
+          <h1>You scored {{score.correctAnswers}}/{{score.totalQuestions}}!</h1>
       </div>
   </div>
 </template>

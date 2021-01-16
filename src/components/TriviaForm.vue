@@ -1,6 +1,5 @@
 <template lang="html">
   <div>
-      <h3>Choose from the below options to generate a random game of trivia!</h3>
       <form v-on:submit.prevent="emitNewGameInfo" id="generate-trivia-form">
         <label for="amount">Number of questions: </label>
         <input type="number" min="0" name="amount" placeholder="e.g. 10" v-model="newGameInfo.amount">
@@ -24,6 +23,7 @@
         </select>
         <input type="submit" value="Play!">
       </form>
+      <h3 v-if="showForm">Choose from the above options to play a game of trivia!</h3>
   </div>
 </template>
 
@@ -39,11 +39,13 @@ export default {
                 category: "",
                 difficulty: "",
                 type: ""
-            }
+            },
+            showForm: true
         };
     },
     methods: {
         emitNewGameInfo: function(){
+            this.showForm = false;
             eventBus.$emit('new-game-info', this.newGameInfo);
             eventBus.$emit('show-answers', false);
         }

@@ -9,7 +9,7 @@
                 </form>
             </li>
         </ol>
-        <p v-if="showAnswers">Correct answer: {{correct}}</p>
+        <p class="correct-answer" v-if="showAnswers">Correct answer: {{correct}}</p>
     </div>
 </template>
 
@@ -47,5 +47,9 @@ export default {
 <style lang="css" scoped>
 .answers {
     list-style-type: upper-alpha;
+}
+
+.correct-answer {
+    background-color: mediumspringgreen;
 }
 </style>
