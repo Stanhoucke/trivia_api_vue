@@ -37,7 +37,7 @@ export default {
     mounted(){
         eventBus.$on('selected-answer', (answer) => {
             this.selectedAnswers.unshift(answer);
-    });
+        });
     },
     methods: {
         getAnswers: function() {
@@ -56,18 +56,15 @@ export default {
         },
         scoreTrivia: function() {
             const numberCorrect = this.questions.reduce((totalScore, question, i) => {
-                console.log('Score ', totalScore);
-                console.log('Answer ', question.correct_answer);
-                console.log('My Answer ', this.finalAnswers[i][1]);
                 if ( question.correct_answer === this.finalAnswers[i][1] ){
                     return totalScore + 1;
                 } else {
                     return totalScore + 0;
                 };
             }, 0);
-            console.log(numberCorrect);
-            this.score.correctAnswers += numberCorrect;
-            this.score.totalQuestions += this.finalAnswers.length;
+            this.score.correctAnswers = numberCorrect;
+            this.score.totalQuestions = this.finalAnswers.length;
+            eventBus.$emit('show-answers', true);
         }
     }
 }

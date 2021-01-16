@@ -44,7 +44,8 @@ export default {
     },
     methods: {
         emitNewGameInfo: function(){
-            eventBus.$emit('new-game-info', this.newGameInfo)
+            eventBus.$emit('new-game-info', this.newGameInfo);
+            eventBus.$emit('show-answers', false);
         }
     }
 

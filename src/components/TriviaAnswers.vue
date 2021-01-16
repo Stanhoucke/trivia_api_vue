@@ -1,4 +1,5 @@
 <template lang="html">
+    <div>
         <ol class="answers">
             <li v-for="(answer) in answers">
                 <form v-on:change.prevent="emitAnswer">
@@ -8,6 +9,8 @@
                 </form>
             </li>
         </ol>
+        <p v-if="showAnswers">Correct answer: {{correct}}</p>
+    </div>
 </template>
 
 <script>
@@ -17,10 +20,14 @@ export default {
     name: 'trivia-answers',
     data(){
         return{
-            selectedAnswer: null
+            selectedAnswer: null,
+            showAnswers: false
         };
     },
     props: ['correct', 'incorrect', 'questionNumber'],
+    mounted() {
+        eventBus.$on('show-answers', show => this.showAnswers = show);
+    },
     computed: {
         answers: function(){
             let index = Math.floor(Math.random() * 4);
